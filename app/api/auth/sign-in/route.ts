@@ -10,6 +10,7 @@ export async function POST(request: NextRequest) {
         const body = await request.json()
 
         const { email, password } = body
+        console.log(password)
 
         if (!email || !password) {
             return NextResponse.json(
@@ -40,10 +41,6 @@ export async function POST(request: NextRequest) {
             process.env.JWT_SECRET!,
             { expiresIn: "7d" }
         )
-
-        // await redisConfig.set(user._id.toString(), token, {
-        //     EX: 60 * 60,
-        // })
 
         return NextResponse.json({
             message: "Пользователь успешно авторизовался",

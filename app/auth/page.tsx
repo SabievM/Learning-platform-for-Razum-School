@@ -14,8 +14,11 @@ import { Lock, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import axios from "axios"
 import { toast } from "sonner"
+import { useAuthStore } from "@/store/authStore"
+import { useRouter } from "next/navigation"
 
 const Authpage = () => {
+    const { setUser, setToken } = useAuthStore()
     const [isLogin, setIsLogin] = useState(true)
     const [isLoading, setIsLoading] = useState(false)
     const [formData, setFormData] = useState({
@@ -24,10 +27,11 @@ const Authpage = () => {
         password: "",
     })
 
+    const router = useRouter()
+
     const handleChange = (e: any) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
-    console.log(isLogin)
 
     const handleSubmit = async (e: any) => {
         e.preventDefault()
@@ -38,7 +42,15 @@ const Authpage = () => {
                     email: formData.email,
                     password: formData.password,
                 })
-                toast.success("Вы успешно авторизовались!")
+                const { user, token } = response.data
+                setUser(user)
+                setToken(token)
+                if (!token) {
+                    toast.error("Неправильный логин или пароль!")
+                } else {
+                    toast.success("Вы успешно авторизовались")
+                    router.push("/student/profile")
+                }
             } else {
                 const response = await axios.post("/api/auth/sign-up", {
                     name: formData.name,
@@ -49,6 +61,7 @@ const Authpage = () => {
             }
         } catch (error) {
             console.log("Возникла ошибка при авторизации", error)
+            toast.error("Возникла ошибка при обработке данных")
         } finally {
             setIsLoading(false)
         }

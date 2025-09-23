@@ -16,7 +16,7 @@ const HeroSection = () => {
                 transition={{ duration: 0.8 }}
                 className="relative z-10 max-w-3xl text-center space-y-6"
             >
-                <h1 className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
+                <h1 className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight text-white">
                     Empower Your Learning
                     <span className="ml-4 bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
                         LMS
