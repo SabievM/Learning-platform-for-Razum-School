@@ -9,8 +9,17 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+
 import { Input } from "@/components/ui/input"
-import { Lock, User } from "lucide-react"
+import { CircleDot, Lock, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import axios from "axios"
 import { toast } from "sonner"
@@ -25,12 +34,14 @@ const Authpage = () => {
         name: "",
         email: "",
         password: "",
+        role: "",
     })
 
     const router = useRouter()
 
     const handleChange = (e: any) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
+        //console.log(formData.role)
     }
 
     const handleSubmit = async (e: any) => {
@@ -56,7 +67,9 @@ const Authpage = () => {
                     name: formData.name,
                     email: formData.email,
                     password: formData.password,
+                    role: formData.role,
                 })
+                router.push("/auth/sign-in")
                 toast.success("Вы успешно зарегитсрировались")
             }
         } catch (error) {
@@ -116,6 +129,36 @@ const Authpage = () => {
                                 required
                             />
                         </div>
+                        {!isLogin && (
+                            <div className="flex items-center gap-2">
+                                <CircleDot className="w-5 h-5" />
+                                <Select
+                                    value={formData.role}
+                                    onValueChange={handleChange}
+                                >
+                                    <SelectTrigger className="">
+                                        <SelectValue
+                                            placeholder="Выберите роль"
+                                            className="placeholder-white/60"
+                                        />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectItem value="student">
+                                                Ученик
+                                            </SelectItem>
+                                            <SelectItem
+                                                value="teacher"
+                                                onSelect={handleChange}
+                                            >
+                                                Учитель
+                                            </SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        )}
+
                         <Button
                             type="submit"
                             className="w-full mt-2 bg-indigo-700 hover:bg-indigo-600 text-white"
@@ -126,14 +169,14 @@ const Authpage = () => {
                     </form>
                     <p className="text-center text-sm mt-4">
                         {isLogin
-                            ? "Уже есть аккаунт"
-                            : "Не зарегистрировались?"}
+                            ? "Не зарегистрировались?"
+                            : "Уже есть аккаунт?"}
                         <button
                             type="button"
                             onClick={() => setIsLogin(!isLogin)}
                             className="text-indigo-400 hover:underline cursor-pointer ml-2"
                         >
-                            {isLogin ? "Авторизоваться" : "Зарегистрироваться"}
+                            {isLogin ? "Зарегистрироваться" : "Авторизоваться"}
                         </button>
                     </p>
                 </CardContent>

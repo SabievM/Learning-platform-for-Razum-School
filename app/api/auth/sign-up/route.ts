@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
     await connectDB()
     try {
         const body = await request.json()
-        const { name, email, password } = body
+        const { name, email, password, role } = body
 
         if (!name || !email || !password) {
             return NextResponse.json(
@@ -31,6 +31,7 @@ export async function POST(request: NextRequest) {
             name,
             email,
             password: hashpassword,
+            role,
         }).save()
 
         return NextResponse.json(

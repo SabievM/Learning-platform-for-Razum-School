@@ -76,6 +76,19 @@ const Navbar = () => {
                             >
                                 Профиль
                             </Button>
+                            {user?.role === "instructor" ? (
+                                <Button
+                                    onClick={() =>
+                                        router.push("/instructor/create-course")
+                                    }
+                                    size="sm"
+                                    className="bg-purple-500 hover:bg-purple-700 text-white cursor-pointer"
+                                >
+                                    Создать курс
+                                </Button>
+                            ) : (
+                                ""
+                            )}
                             <Button
                                 size="sm"
                                 className="bg-purple-500 hover:bg-purple-700 text-white cursor-pointer"

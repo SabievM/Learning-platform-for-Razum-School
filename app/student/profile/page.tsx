@@ -1,5 +1,7 @@
 "use client"
 
+import { motion } from "framer-motion"
+import { div } from "framer-motion/client"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -80,7 +82,11 @@ const StudentProfilePage = () => {
     console.log("wwwwww", token)
 
     return (
-        <div className="w-screen h-screen bg-gradient-to-br from-blue-700 to-purple-600 pt-36">
+        <motion.div
+            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            className="w-screen h-screen bg-gradient-to-br from-blue-700 to-purple-600 pt-36"
+        >
             <div className="max-w-md mx-auto p-4 space-y-4 rounded-sm shadow-lg bg-white/5">
                 <div className="flex items-center gap-4">
                     {userDetails?.photo ? (
@@ -146,7 +152,7 @@ const StudentProfilePage = () => {
                     У вас пока нет выбранных курсов
                 </h2>
             </div>
-        </div>
+        </motion.div>
     )
 }
 export default StudentProfilePage
